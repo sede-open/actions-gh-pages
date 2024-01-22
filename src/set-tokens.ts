@@ -4,6 +4,7 @@ import * as github from '@actions/github';
 import * as io from '@actions/io';
 import path from 'path';
 import fs from 'fs';
+import _ from 'lodash';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const cpSpawnSync = require('child_process').spawnSync;
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -88,7 +89,7 @@ Use deploy_key or personal_token.
   }
 
   if (eventName === 'push') {
-    isProhibitedBranch = ref.match(new RegExp(`^refs/heads/${publishBranch}$`)) !== null;
+    isProhibitedBranch = ref.match(new RegExp(`^refs/heads/${_.escapeRegExp(publishBranch)}$`)) !== null;
     if (isProhibitedBranch) {
       throw new Error(`\
 You deploy from ${publishBranch} to ${publishBranch}
